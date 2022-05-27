@@ -9,10 +9,10 @@ data = {
     "apiLogin": "8825f00c" # client novgorod
 }
 data = {
-    "apiLogin": "7ff5cfa5"
+    "apiLogin": "fa7202f0" # client
 }
 data = {
-    "apiLogin": "e19d9129" # client redbuffet
+    "apiLogin": "7ff5cfa5" # тест
 }
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
