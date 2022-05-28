@@ -2,6 +2,7 @@ import requests
 import json
 import re
 import datetime
+import time
 label = ''
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
 authorization_url = 'https://api-ru.iiko.services/api/1/access_token'
@@ -9,7 +10,7 @@ data = {
     "apiLogin": "8825f00c" # client novgorod
 }
 data = {
-    "apiLogin": "fa7202f0" # client
+    "apiLogin": "9a8a8a20" # client
 }
 data = {
     "apiLogin": "7ff5cfa5" # тест
@@ -29,8 +30,19 @@ terminals_url = 'https://api-ru.iiko.services/api/1/terminal_groups'
 data = {
     'organizationIds': ORGANIZATION_IDS,
 }
+
 TERMINGAL_GROUPS_IDS_RAW = requests.post(url=terminals_url, headers=headers, data=json.dumps(data)).json()['terminalGroups']
 print(TERMINGAL_GROUPS_IDS_RAW)
+is_alive_url = 'https://api-ru.iiko.services/api/1/terminal_groups/is_alive'
+#'items': [{'id': 'fca3d719-a30a-4db5-9ea7-b938e7f56202',
+# 'organizationId': '847b26c8-68c3-461a-8511-99c292b9dc16', 'name': 'Группа Ночная доставка', 'address': ''}]
+data = {
+    'organizationIds': ['847b26c8-68c3-461a-8511-99c292b9dc16'], #ночная доставка
+    'terminalGroupIds': ['fca3d719-a30a-4db5-9ea7-b938e7f56202'],
+}
+ALIVE_TERMINALS = requests.post(url=is_alive_url, headers=headers, data=json.dumps(data)).json()
+print(ALIVE_TERMINALS)
+#time.sleep(30)
 MENU_URL = 'https://api-ru.iiko.services/api/1/nomenclature'
 ETALON_ORG = 'e7dc065d-2536-4d94-b2d9-f2c56ab8a02b' # кролик
 ETALON_ORG = '2be1360a-93d0-4b17-82d4-5193a487bc3f' # барсук
