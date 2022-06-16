@@ -10,10 +10,10 @@ data = {
     "apiLogin": "8825f00c" # client novgorod
 }
 data = {
-    "apiLogin": "9a8a8a20" # client
+    "apiLogin": "f11925b0" # тест
 }
 data = {
-    "apiLogin": "7ff5cfa5" # тест
+    "apiLogin": "b51f40a0" # client
 }
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
@@ -36,9 +36,15 @@ print(TERMINGAL_GROUPS_IDS_RAW)
 is_alive_url = 'https://api-ru.iiko.services/api/1/terminal_groups/is_alive'
 #'items': [{'id': 'fca3d719-a30a-4db5-9ea7-b938e7f56202',
 # 'organizationId': '847b26c8-68c3-461a-8511-99c292b9dc16', 'name': 'Группа Ночная доставка', 'address': ''}]
+terminals = []
+for org in TERMINGAL_GROUPS_IDS_RAW:
+    for term in org['items']:
+        terminals.append(term['id'])
+
+
 data = {
-    'organizationIds': ['847b26c8-68c3-461a-8511-99c292b9dc16'], #ночная доставка
-    'terminalGroupIds': ['fca3d719-a30a-4db5-9ea7-b938e7f56202'],
+    'organizationIds': ORGANIZATION_IDS, #ночная доставка
+    'terminalGroupIds': terminals,
 }
 ALIVE_TERMINALS = requests.post(url=is_alive_url, headers=headers, data=json.dumps(data)).json()
 print(ALIVE_TERMINALS)

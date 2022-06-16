@@ -49,7 +49,7 @@ retrieve_order_url = 'https://api-ru.iiko.services/api/1/deliveries/by_id'
 data = {
 "organizationId": org_id,
 "orderIds": [
-"ee67f713-5b22-40ea-8535-b93dd594a9ef"
+"033b3cb9-5554-4f43-8767-29dbdb4f6571"
 ],
 }
 
