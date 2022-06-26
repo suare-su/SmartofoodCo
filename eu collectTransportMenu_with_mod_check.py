@@ -6,7 +6,7 @@ import time
 label = ''
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
 authorization_url = 'https://api-eu.iiko.services/api/1/access_token'
-authorization_url = 'https://api-ru.iiko.services/api/1/access_token'
+authorization_url = 'https://api-eu.iiko.services/api/1/access_token'
 data = {
     "apiLogin": "8825f00c" # client novgorod
 }
@@ -14,27 +14,27 @@ data = {
     "apiLogin": "f11925b0" # тест
 }
 data = {
-    "apiLogin": "7ff5cfa5" # ru demo stand
+    "apiLogin": "a9a4d21e-a51" # eu demo stand
 }
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
 
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8', 'Authorization':'Bearer %s' % token}
 data = {}
-org_url = 'https://api-ru.iiko.services/api/1/organizations'
+org_url = 'https://api-eu.iiko.services/api/1/organizations'
 ORGANIZATION_IDS = [org['id'] for org in requests.post(url=org_url, headers=headers, data=json.dumps(data)).json()['organizations']]
 print("ORGANIZATIONS: ", ORGANIZATION_IDS)
 
 ORGANIZATION_IDS
 
-terminals_url = 'https://api-ru.iiko.services/api/1/terminal_groups'
+terminals_url = 'https://api-eu.iiko.services/api/1/terminal_groups'
 data = {
     'organizationIds': ORGANIZATION_IDS,
 }
 
 TERMINGAL_GROUPS_IDS_RAW = requests.post(url=terminals_url, headers=headers, data=json.dumps(data)).json()['terminalGroups']
 print(TERMINGAL_GROUPS_IDS_RAW)
-is_alive_url = 'https://api-ru.iiko.services/api/1/terminal_groups/is_alive'
+is_alive_url = 'https://api-eu.iiko.services/api/1/terminal_groups/is_alive'
 #'items': [{'id': 'fca3d719-a30a-4db5-9ea7-b938e7f56202',
 # 'organizationId': '847b26c8-68c3-461a-8511-99c292b9dc16', 'name': 'Группа Ночная доставка', 'address': ''}]
 terminals = []
@@ -50,7 +50,7 @@ data = {
 ALIVE_TERMINALS = requests.post(url=is_alive_url, headers=headers, data=json.dumps(data)).json()
 print(ALIVE_TERMINALS)
 #time.sleep(30)
-MENU_URL = 'https://api-ru.iiko.services/api/1/nomenclature'
+MENU_URL = 'https://api-eu.iiko.services/api/1/nomenclature'
 ETALON_ORG = 'e7dc065d-2536-4d94-b2d9-f2c56ab8a02b' # кролик
 ETALON_ORG = '2be1360a-93d0-4b17-82d4-5193a487bc3f' # барсук
 #ETALON_ORG = '2d79da61-5843-4dc1-a13d-9db0704c78c1' # новгород
@@ -382,7 +382,7 @@ def update_menu(all_menu, terminals, CollectEtalonOnly):
     return collected_menu
 
 menu, revisions = collect_menu(organizationIds=ORGANIZATION_IDS, terminals=TERMINGAL_GROUPS_IDS_RAW, etalon_Organization=ETALON_ORG, CollectEtalonOnly=True) # собираем меню,
-#print(json.dumps(menu))
+print(json.dumps(menu))
 file2 = open(r"C:\1\all-menu %s %s.txt" % (label, str(datetime.datetime.now()).replace(':','_').replace('.','_')),"w+")
 for product in menu['products']:
     if product['differentPricesOn']:
