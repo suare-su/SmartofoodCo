@@ -49,11 +49,15 @@ retrieve_order_url = 'https://api-ru.iiko.services/api/1/deliveries/by_id'
 data = {
 "organizationId": org_id,
 "orderIds": [
-"033b3cb9-5554-4f43-8767-29dbdb4f6571"
+"2953c686-3cc2-4297-a3c5-30c9c7221ac7"
 ],
 }
-
+data = {"organizationId": "e7dc065d-2536-4d94-b2d9-f2c56ab8a02b", "orderIds": ["9adfbd04-03af-9577-0183-2ac27b4d78b6"]}
+data = {"organizationId": "2be1360a-93d0-4b17-82d4-5193a487bc3f", "orderIds": ["39077032-1596-49a6-b88c-c0644fd842cb"]}
 order_response = requests.post(url=retrieve_order_url, headers=headers, data=json.dumps(data)).json()
+print('--------------data request--------------')
+print(json.dumps(data))
+print('--------------data request--------------')
 
 print('--------------order info--------------')
 print(json.dumps(order_response))

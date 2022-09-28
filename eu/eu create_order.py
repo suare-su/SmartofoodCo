@@ -41,39 +41,61 @@ ETALON_ORG = '2be1360a-93d0-4b17-82d4-5193a487bc3f' # барсук
 #ETALON_ORG = '2d79da61-5843-4dc1-a13d-9db0704c78c1' # новгород
 ETALON_ORG =''
 
-org_id = '2be1360a-93d0-4b17-82d4-5193a487bc3f' # барсук
-terminal_id = '2ffb705b-d3d0-2400-017a-7ae49b7200cf' # барсук
-org_id = 'e7dc065d-2536-4d94-b2d9-f2c56ab8a02b' # кролик
-terminal_id = '46e412c2-c384-4857-a637-5971d0aa1ecf'# кролик
+org_id = ORGANIZATION_IDS[0] # кролик
+terminal_id = TERMINGAL_GROUPS_IDS_RAW[0]['items'][0]['id']
 phone ='+79068755752'
 name = 'Игорь'
-
-org_id = 'b9eede12-44d1-4eaf-9724-1fa9237be4da' # cute badger
-terminal_id = '48fd91da-ec50-41ab-8a1c-aedcfd96da27'# cute badger
 
 # Структура заказа
 data = {
     'organizationId': org_id,
     'terminalGroupId': terminal_id,
-    'externalNumber': '111',
     'order': {
         'phone': phone,
         'customer': {
             'name': name,
         },
-        'orderServiceType': "DeliveryByClient",
-        'items': []
+       # 'orderServiceType': "DeliveryByClient",
+        'orderServiceType': "DeliveryByCourier",
+
+        "deliveryPoint": {
+            "coordinates": {
+                "latitude": 25.15332,
+                "longitude": 55.22523,
+             #   "latitude": 25.15332,
+            },
+            "address": {
+                "street": {
+                    # "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "name": "hello world",
+                    "city": "Dubai"
+                },
+           # "index": "string",
+            "house": "Any random string 22",
+            # "building": "string",
+            # "flat": "string",
+            # "entrance": "string",
+            # "floor": "string",
+            # "doorphone": "string",
+            # "region": {
+            # "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            # "name": "string"
+            }
+        },
+        # "externalCartographyId": "string",
+        # "comment": "string"
+        'items': [],
+        },
     }
-}
 
 items = [
     {
-        'productId': '7ec23c6c-0bef-4cdb-afb6-902ff964cd75', # Greate Burger
+        'productId': '05af0fa0-51e8-49ba-a0ee-c6f5cf11673f', #Cheeseburger
         'type': 'Product',
         'amount': 1,
         # 'modifiers': [
         #     {
-        #         'productId': '7ec23c6c-0bef-4cdb-afb6-902ff964cd75', # - бекон
+        #         'productId': '77d21dd7-f684-47f0-86b3-02fd2f5df8c7', # - бекон
         #         'amount': 1,
         #         'productGroupId': 'a0509895-8b0c-4b3a-9810-5ade7ce8b739',# Папка Для вока
         #     }
@@ -82,19 +104,8 @@ items = [
 
 ]
 
-tips = [
-    {
-        'paymentTypeKind': 'Cash',
-        'tipsTypeId': '0ef8fb9a-57aa-f746-0181-908bfcb8529b',
-        'sum': 13,
-        'paymentTypeId': '09322f46-578a-d210-add7-eec222a08871'
-
-    }
-]
-
 
 data['order']['items'] = items
-data['order']['tips'] = tips
 
 create_order_url = 'https://api-eu.iiko.services/api/1/deliveries/create'
 #calculate_checkin_url = 'https://api-eu.iiko.services/api/1/loyalty/iiko/calculate'

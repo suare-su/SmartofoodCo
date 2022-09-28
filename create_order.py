@@ -55,6 +55,7 @@ data = {
     'externalNumber': '111',
     'order': {
         'phone': phone,
+     #   'waiter': {'id': '1b746a63-77fc-4fa5-acc4-0903f497c495'},
         'customer': {
             'name': name,
         },
@@ -225,7 +226,7 @@ print('--------------order_response--------------')
 print(json.dumps(order_response))
 #print(json.dumps(calculate_checkin_response))
 print('--------------order_response--------------')
-time.sleep(3)
+time.sleep(10)
 get_order_status_url = 'https://api-ru.iiko.services/api/1/commands/status'
 correlation_id = order_response['correlationId']
 data = {

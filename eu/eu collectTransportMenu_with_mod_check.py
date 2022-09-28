@@ -6,15 +6,8 @@ import time
 label = ''
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
 authorization_url = 'https://api-eu.iiko.services/api/1/access_token'
-authorization_url = 'https://api-eu.iiko.services/api/1/access_token'
 data = {
-    "apiLogin": "8825f00c" # client novgorod
-}
-data = {
-    "apiLogin": "f11925b0" # тест
-}
-data = {
-    "apiLogin": "a9a4d21e-a51" # eu demo stand
+    "apiLogin": "a9a4d21e-a51" # тест
 }
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
@@ -382,7 +375,7 @@ def update_menu(all_menu, terminals, CollectEtalonOnly):
     return collected_menu
 
 menu, revisions = collect_menu(organizationIds=ORGANIZATION_IDS, terminals=TERMINGAL_GROUPS_IDS_RAW, etalon_Organization=ETALON_ORG, CollectEtalonOnly=True) # собираем меню,
-print(json.dumps(menu))
+#print(json.dumps(menu))
 file2 = open(r"C:\1\all-menu %s %s.txt" % (label, str(datetime.datetime.now()).replace(':','_').replace('.','_')),"w+")
 for product in menu['products']:
     if product['differentPricesOn']:

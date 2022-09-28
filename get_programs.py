@@ -6,8 +6,18 @@ import datetime
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
 authorization_url = 'https://api-ru.iiko.services/api/1/access_token'
 data = {
+    "apiLogin": "3547966a-8bf"
+}
+data = {
     "apiLogin": "7ff5cfa5"
 }
+data = {
+    "apiLogin": "c6aa4bc0"
+}
+data = {
+    "apiLogin": "3547966a-8bf"
+}
+
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
 
@@ -18,15 +28,9 @@ ORGANIZATION_IDS = [org['id'] for org in requests.post(url=org_url, headers=head
 print("ORGANIZATIONS: ", ORGANIZATION_IDS)
 folder = 'GetNewMenu'
 label = ''
-create_customer_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/customer/create_or_update'
-
+get_programs_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/program'
 data = {
     'organizationId': ORGANIZATION_IDS[0],
-    'phone': '+79999999994',
-    'name': 'ok2',
-    #'consentStatus': 1,
-    #'consentSStatus': '+79999999994',
 }
-
-customer = requests.post(url=create_customer_url, headers=headers, data=json.dumps(data)).json()
-print(customer)
+programs = requests.post(url=get_programs_url, headers=headers, data=json.dumps(data)).json()
+print(json.dumps(programs))

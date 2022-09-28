@@ -19,7 +19,7 @@ print("ORGANIZATIONS: ", ORGANIZATION_IDS)
 folder = 'GetNewMenu'
 label = ''
 ORGANIZATION_IDS
-
+print(ORGANIZATION_IDS)
 terminals_url = 'https://api-ru.iiko.services/api/1/terminal_groups'
 data = {
     'organizationIds': ORGANIZATION_IDS,
@@ -35,12 +35,16 @@ ETALON_ORG = '2be1360a-93d0-4b17-82d4-5193a487bc3f' # барсук
 data = {
 }
 current_menu = requests.post(url=MENUS_URL_v2, headers=headers, data=json.dumps(data)).json()
-print(current_menu)
+print('----------response-----------')
+print(json.dumps(current_menu))
+print('----------response-----------')
 #{'correlationId': 'e0850348-e8a6-4a1e-ad5b-bc0ac298c305', 'externalMenus': [{'id': '3435', 'name': 'Меню Кролика'}], 'priceCategories': None}
 data = {
-    "externalMenuId": 5059,
+    "externalMenuId": 6491,
     "organizationIds": ORGANIZATION_IDS,
     "priceCategoryId": '00000000-0000-0000-0000-000000000000',
+    #   "priceCategoryId": '1312b198-ae90-4222-aa7f-f149b67f5765', # ЦК 2 Ручная
+    'version': 3,
 }
 #{'correlationId': 'b87c609f-ab40-48bf-9122-1fddad3b6ee2',
 # 'externalMenus': [{'id': '4679', 'name': 'В мире животных'}],
@@ -52,6 +56,12 @@ current_menu = requests.post(url=MENU_URL_v2, headers=headers, data=json.dumps(d
 file2 = open(r"C:\1\%s\all-menu %s %s.txt" % (folder, label, str(datetime.datetime.now())[:19].replace(':','_')),"w+")
 file2.write(json.dumps(current_menu))
 file2.close()
+print('request')
+print(json.dumps(data))
+print('request')
+print('------------- reponse new menu-----------------')
+print(json.dumps(current_menu))
+print('------------- reponse new menu-----------------')
 new_menu = {
     'groups': [],
     'productCategories': [],
@@ -59,88 +69,3 @@ new_menu = {
     'sizes': [],
 
 }
-i = 0
-for group in current_menu['itemCategories']:
-
-    print(group['id'])
-
-    if group['buttonImageUrl']:
-        imageLinks = [group['buttonImageUrl']]
-    else:
-        imageLinks = {}
-
-    if group['description']:
-        description = [group['description']]
-    else:
-        description = ""
-
-    new_group = {
-        "imageLinks":imageLinks,
-        "parentGroup":None,
-        "order":i,
-        "isIncludedInMenu":True,
-        "isGroupModifier":False,
-        "id":group['id'],
-        "code":"",
-        "name":group['name'],
-        "description":description,
-        "additionalInfo":None,
-        "tags":{
-        },
-        "isDeleted":None,
-        "seoDescription":None,
-        "seoText":None,
-        "seoKeywords":None,
-        "seoTitle":None
-    }
-
-    new_menu['groups'].append(new_group)
-
-    for item in group['items']:
-
-        new_product = {
-            "fatAmount":7,
-            "proteinsAmount":6,
-            "carbohydratesAmount":18,
-            "energyAmount":159,
-            "fatFullAmount":21,
-            "proteinsFullAmount":18,
-            "carbohydratesFullAmount":54,
-            "energyFullAmount":477,
-            "weight":0.3,
-            "groupId":"7a4181d3-5c6d-4a38-9cf6-49ed2f1660b4",
-            "productCategoryId":None,
-            "type":"Dish",
-            "orderItemType":"Compound",
-            "modifierSchemaId":"00a7cb5b-21ca-48be-9a19-837793c3bedf",
-            "modifierSchemaName":"Вок схема (дополнительно)",
-            "splittable":False,
-            "measureUnit":"порц",
-            "sizePrices":[],
-            "modifiers":[],
-            "groupModifiers":[],
-            "imageLinks":{},
-            "doNotPrintInCheque":False,
-            "parentGroup":"f08451c9-1900-4aa2-a345-09b89cf235f2",
-            "order":0,
-            "fullNameEnglish":"",
-            "useBalanceForSell":False,
-            "canSetOpenPrice":False,
-            "id":"6cbfae25-fb9c-40d2-8c0b-fb71bc8199b2",
-            "code":"00060",
-            "name":"Вок с говядиной",
-            "description":"Говядина, овощной микс, лапша удон, кунжут, чесночный соус",
-            "additionalInfo":None,
-            "tags":{},
-            "isDeleted":False,
-            "seoDescription":None,
-            "seoText":None,
-            "seoKeywords":None,
-            "seoTitle":None
-        }
-
-
-    i = i + 1
-
-
-print(json.dumps(new_menu))

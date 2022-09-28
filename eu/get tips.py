@@ -39,7 +39,7 @@ print(TERMINGAL_GROUPS_IDS_RAW)
 paytypes_url = 'https://api-eu.iiko.services/api/1/payment_types'
 
 PAYTYPES = requests.post(url=paytypes_url, headers=headers, data=json.dumps(data)).json()
-print(PAYTYPES)
+print(json.dumps(PAYTYPES))
 #{'correlationId': '26d53b11-bc4b-4b08-9f87-1574e25f2a59',
 # 'paymentTypes': [
 # {'id': '09322f46-578a-d210-add7-eec222a08871', 'code': 'CASH', 'name': 'Наличные', 'comment': '', 'combinable': True, 'externalRevision': 1495,

@@ -48,37 +48,18 @@ data = {
 TERMINGAL_GROUPS_IDS_RAW = requests.post(url=terminals_url, headers=headers, data=json.dumps(data)).json()['terminalGroups']
 print(TERMINGAL_GROUPS_IDS_RAW)
 
-change_payments_url = 'https://api-eu.iiko.services/api/1/deliveries/change_payments'
+cancel_order_url = 'https://api-eu.iiko.services/api/1/deliveries/cancel_confirmation'
 org_id = ORGANIZATION_IDS[0]
 data = {
-    "organizationId": org_id,
-    "orderId": "b026ed46-85c5-467f-abf4-46db17c1fd3e",
-    "payments": [
-        # {
-            # "paymentTypeKind": "Cash",
-            # "sum": 11,
-            # "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
-            # "isProcessedExternally": true,
-            # "paymentAdditionalData": {},
-            # "isFiscalizedExternally": true
-        # }
-    ],
-    "tips": [
-    {
-        'paymentTypeKind': 'Card',
-        'tipsTypeId': '0ef8fb9a-57aa-f746-0181-908bfcb8529b',
-        'sum': 100,
-        'paymentTypeId': '2119bac0-c1ee-4e69-a12d-5bef755e474a'
-
-    }
-]
+    'organizationId': org_id,
+    'orderId': "b026ed46-85c5-467f-abf4-46db17c1fd3e",
 }
-CHANGE_PAYMENTS = requests.post(url=change_payments_url, headers=headers, data=json.dumps(data)).json()
+order_cancel = requests.post(url=cancel_order_url, headers=headers, data=json.dumps(data)).json()
 
-print(CHANGE_PAYMENTS)
+print(order_cancel)
 
 
-correlation_id = CHANGE_PAYMENTS['correlationId']
+correlation_id = order_cancel['correlationId']
 data = {
     'organizationId': org_id,
     'correlationId': correlation_id,

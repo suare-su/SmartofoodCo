@@ -6,7 +6,7 @@ import time
 import uuid
 label = ''
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-authorization_url = 'https://api-ru.iiko.services/api/1/access_token'
+authorization_url = 'https://api-eu.iiko.services/api/1/access_token'
 data = {
     "apiLogin": "8825f00c" # client novgorod
 }
@@ -20,20 +20,20 @@ data = {
     "apiLogin": "0c39be08" # тест
 }
 data = {
-    "apiLogin": "7ff5cfa5" # тест
+    "apiLogin": "a9a4d21e-a51" # тест
 }
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
 
 headers = {'Content-Type': 'application/json', 'charset': 'utf-8', 'Authorization':'Bearer %s' % token}
 data = {}
-org_url = 'https://api-ru.iiko.services/api/1/organizations'
+org_url = 'https://api-eu.iiko.services/api/1/organizations'
 ORGANIZATION_IDS = [org['id'] for org in requests.post(url=org_url, headers=headers, data=json.dumps(data)).json()['organizations']]
 print("ORGANIZATIONS: ", ORGANIZATION_IDS)
 
 ORGANIZATION_IDS
 
-terminals_url = 'https://api-ru.iiko.services/api/1/terminal_groups'
+terminals_url = 'https://api-eu.iiko.services/api/1/terminal_groups'
 data = {
     'organizationIds': ORGANIZATION_IDS,
 }
@@ -42,12 +42,12 @@ print(TERMINGAL_GROUPS_IDS_RAW)
 #{'id': '2ffb705b-d3d0-2400-017a-7ae49b7200cf',
 # 'organizationId': '2be1360a-93d0-4b17-82d4-5193a487bc3f',
 # 'name': 'Группа Милый барсук', 'address': ''}
-MENU_URL = 'https://api-ru.iiko.services/api/1/nomenclature'
+MENU_URL = 'https://api-eu.iiko.services/api/1/nomenclature'
 ETALON_ORG =''
 
 org_id = TERMINGAL_GROUPS_IDS_RAW[0]['organizationId']
 terminal_id = TERMINGAL_GROUPS_IDS_RAW[0]['items'][0]['id']
-phone ='+70000000003'
+phone ='+79068755752'
 #name = 'Игорь'
 
 # Структура заказа
@@ -66,11 +66,6 @@ data = {
          #   'name': '',
         },
         "payments": [
-            {
-                "paymentTypeKind": "Cash",
-                "sum": 1500,
-                "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
-            }
         ],
         'orderServiceType': "DeliveryByCourier",
         'items': [],
@@ -89,13 +84,14 @@ data = {
     }
 }
 
+
 items = [
     {
-        'productId': '45f3ef02-7dd8-4fca-8a07-830e37b16cbd', # Апельсиновый фреш
+        'productId': '05af0fa0-51e8-49ba-a0ee-c6f5cf11673f', #Cheeseburger
         'type': 'Product',
-        'amount': 10,
+        'amount': 1,
         'price': 150,
-        'positionId':'4597e942-714f-4226-840e-3c89e6f85298',
+        "positionId":"4597e942-714f-4226-840e-3c89e6f85298"
         # 'modifiers': [
         #     {
         #         'productId': '77d21dd7-f684-47f0-86b3-02fd2f5df8c7', # - бекон
@@ -108,7 +104,7 @@ items = [
 ]
 data['order']['items'] = items
 #data = {"organizationId":"62cc4155-1614-4491-83f3-2cb1c719d3d4","terminalGroupId":"c90e55a2-f4e4-b572-0178-16fe641800cf","order":{"id":"74252a78-2ef2-497f-8f81-6150f0f9681b","phone":"+79082625071","orderTypeId":"5b1508f9-fe5b-d6af-cb8d-043af587d5c2","customer":{"name":"Александр"},"items":[{"productId":"cea0e20c-7ac1-4b31-8814-e0a54e6f036b","type":"Product","amount":1,"price":339,"positionId":"4597e942-714f-4226-840e-3c89e6f85298"},{"productId":"9e5d8555-a940-427c-9fb0-3e804342e29b","type":"Product","amount":1,"price":309,"positionId":"f8d5e2eb-59de-438d-9185-20c8f2f54f3e"}],"payments":[{"paymentTypeId":"09322f46-578a-d210-add7-eec222a08871","sum":648,"paymentTypeKind":"Cash"}],"externalNumber":"STF709","guests":{"count":1,"splitBetweenPersons":False},"comment":""}}
-calculate_checkin_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/calculate'
+calculate_checkin_url = 'https://api-eu.iiko.services/api/1/loyalty/iiko/calculate'
 #order_response = requests.post(url=create_order_url, headers=headers, data=json.dumps(data)).json()
 calculate_checkin_response = requests.post(url=calculate_checkin_url, headers=headers, data=json.dumps(data)).json()
 print('--------------request data--------------')
@@ -118,7 +114,7 @@ print('--------------calculate_checkin_response--------------')
 print(json.dumps(calculate_checkin_response))
 print('--------------calculate_checkin_response--------------')
 
-time.sleep(10)
+time.sleep(2)
 data['order']['discountsInfo'] = {
     'discounts': [{
         'programId': calculate_checkin_response["loyaltyProgramResults"][0]['marketingCampaignId'],
@@ -135,8 +131,29 @@ data['order']['discountsInfo'] = {
     }]
 }
 
-create_order_url = 'https://api-ru.iiko.services/api/1/deliveries/create'
-#calculate_checkin_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/calculate'
+data['order']['payments'] = [
+            {
+                "paymentTypeKind": "Cash",
+                "sum": 100,
+                "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
+            },
+    {
+            'paymentTypeKind': 'IikoCard',
+            'sum': 15,
+            'paymentTypeId': 'e3ff7b26-487c-4467-8b36-f3f3972b94b8',
+            'isProcessedExternally': False,
+            'paymentAdditionalData': {
+                'credential': '+79068755752',
+                'searchScope': 'Phone',
+    #            'type': 'SyrveCard',
+            }
+            #  'isFiscalizedExternally': 0,
+
+        }
+
+]
+create_order_url = 'https://api-eu.iiko.services/api/1/deliveries/create'
+#calculate_checkin_url = 'https://api-eu.iiko.services/api/1/loyalty/iiko/calculate'
 order_response = requests.post(url=create_order_url, headers=headers, data=json.dumps(data)).json()
 #calculate_checkin_response = requests.post(url=calculate_checkin_url, headers=headers, data=json.dumps(data)).json()
 to_print = {}
@@ -149,7 +166,7 @@ print(json.dumps(order_response))
 #print(json.dumps(calculate_checkin_response))
 print('--------------order_response--------------')
 time.sleep(3)
-get_order_status_url = 'https://api-ru.iiko.services/api/1/commands/status'
+get_order_status_url = 'https://api-eu.iiko.services/api/1/commands/status'
 correlation_id = order_response['correlationId']
 data = {
     'organizationId': org_id,

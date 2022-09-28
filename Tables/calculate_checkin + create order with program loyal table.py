@@ -47,55 +47,46 @@ ETALON_ORG =''
 
 org_id = TERMINGAL_GROUPS_IDS_RAW[0]['organizationId']
 terminal_id = TERMINGAL_GROUPS_IDS_RAW[0]['items'][0]['id']
-phone ='+70000000003'
+phone ='+79068755752'
 #name = 'Игорь'
 
 # Структура заказа
+#"id": "3be7ca30-51a0-445b-adae-4f7c013c9322", "number": 1, "name": "\u0421\u0442\u043e\u043b 1"
+
 data = {
     'organizationId': org_id,
     'terminalGroupId': terminal_id,
-   # 'externalNumber': '111',
-    #'coupon': 'TST000139',
+    #'externalNumber': '111',
    # 'sourceKey': 'stf',
     'order': {
-        # 'iikoCard5Info': {
-        #     'coupon': 'TST000139',
-        # },
-        'phone': phone,
+     #     'phone': phone,
+     # #   'tableIds': ['3be7ca30-51a0-445b-adae-4f7c013c9322'],
+     #    #'phone': phone,
+     #    'status': 'New', #Bill Closed Deleted New
+     #    # 'customer': {
+     #    #  #   'name': '',
+     #    # },
+     #    'orderServiceType': "Common",
+     #  #  'orderTypeId':'bbbef4dc-5a02-7ea3-81d3-826f4e8bb3e0',
+         'phone': phone,
         'customer': {
-         #   'name': '',
+            'name': 'B',
         },
-        "payments": [
-            {
-                "paymentTypeKind": "Cash",
-                "sum": 1500,
-                "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
-            }
-        ],
-        'orderServiceType': "DeliveryByCourier",
+        'orderTypeId':'bbbef4dc-5a02-7ea3-81d3-826f4e8bb3e0',
+
         'items': [],
-        'deliveryPoint': {
-            'address': {
-                'street': {
-
-                    'classifierId': '72000001000017200',
-                  #  'name': 'Сверд',
-                  #   'city': 'Тюмень',
-                },
-                'house': '22',
-
-            }
-        }
+        'guests': {
+            'count': 4,
+        },
     }
 }
 
 items = [
     {
-        'productId': '45f3ef02-7dd8-4fca-8a07-830e37b16cbd', # Апельсиновый фреш
+        'productId': 'c68e58ae-0de1-49b8-9058-7de83c9a07bd', # Лимонад Манго-Маракуйя
         'type': 'Product',
-        'amount': 10,
-        'price': 150,
-        'positionId':'4597e942-714f-4226-840e-3c89e6f85298',
+        'amount': 2,
+        'price': 200,
         # 'modifiers': [
         #     {
         #         'productId': '77d21dd7-f684-47f0-86b3-02fd2f5df8c7', # - бекон
@@ -106,8 +97,31 @@ items = [
     }
 
 ]
+
+
 data['order']['items'] = items
-#data = {"organizationId":"62cc4155-1614-4491-83f3-2cb1c719d3d4","terminalGroupId":"c90e55a2-f4e4-b572-0178-16fe641800cf","order":{"id":"74252a78-2ef2-497f-8f81-6150f0f9681b","phone":"+79082625071","orderTypeId":"5b1508f9-fe5b-d6af-cb8d-043af587d5c2","customer":{"name":"Александр"},"items":[{"productId":"cea0e20c-7ac1-4b31-8814-e0a54e6f036b","type":"Product","amount":1,"price":339,"positionId":"4597e942-714f-4226-840e-3c89e6f85298"},{"productId":"9e5d8555-a940-427c-9fb0-3e804342e29b","type":"Product","amount":1,"price":309,"positionId":"f8d5e2eb-59de-438d-9185-20c8f2f54f3e"}],"payments":[{"paymentTypeId":"09322f46-578a-d210-add7-eec222a08871","sum":648,"paymentTypeKind":"Cash"}],"externalNumber":"STF709","guests":{"count":1,"splitBetweenPersons":False},"comment":""}}
+# data = \
+#     {"organizationId":"2be1360a-93d0-4b17-82d4-5193a487bc3f",
+#      "terminalGroupId":"2ffb705b-d3d0-2400-017a-7ae49b7200cf",
+#      "order":
+#          {
+#             "id":"ea85d094-9352-4f8b-af72-afa7f11cfc11",
+#           "orderTypeId":"bbbef4dc-5a02-7ea3-81d3-826f4e8bb3e0",
+#           "items":[{"productId":"45f3ef02-7dd8-4fca-8a07-830e37b16cbd",
+#                     "type":"Product","amount":1,"price":150,"positionId":"7f445b6d-b4e7-4192-b1b7-4bc90b5497ed"},
+#                    {"productId":"6f4ebd1f-2e2b-427a-8b45-2d36bd3e267d","type":"Product","amount":1,"price":0,"positionId":"b7cb51ad-4de7-5a95-bffb-936b66ccae4d"}],
+#           "payments":[{"paymentTypeId":"09322f46-578a-d210-add7-eec222a08871","sum":150,"paymentTypeKind":"Cash"}],
+#           "externalNumber":"STF56",
+#          # "guestCount": 3,
+#
+#           "customer":{"name":"Dmtry"},
+#           "phone":"+79220465501"}
+#      }
+#
+
+data['order']['items'] = items
+
+
 calculate_checkin_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/calculate'
 #order_response = requests.post(url=create_order_url, headers=headers, data=json.dumps(data)).json()
 calculate_checkin_response = requests.post(url=calculate_checkin_url, headers=headers, data=json.dumps(data)).json()
@@ -118,24 +132,9 @@ print('--------------calculate_checkin_response--------------')
 print(json.dumps(calculate_checkin_response))
 print('--------------calculate_checkin_response--------------')
 
-time.sleep(10)
-data['order']['discountsInfo'] = {
-    'discounts': [{
-        'programId': calculate_checkin_response["loyaltyProgramResults"][0]['marketingCampaignId'],
-        'programName': calculate_checkin_response["loyaltyProgramResults"][0]['name'],
-        'discountItems': [
-            {
-                'positionId': calculate_checkin_response["loyaltyProgramResults"][0]['discounts'][0]['orderItemId'],
-                'sum': calculate_checkin_response["loyaltyProgramResults"][0]['discounts'][0]['discountSum'],
-                'amount': calculate_checkin_response["loyaltyProgramResults"][0]['discounts'][0]['amount'],
-            }
-        ],
-        'type': 'iikoCard',
+time.sleep(1)
 
-    }]
-}
-
-create_order_url = 'https://api-ru.iiko.services/api/1/deliveries/create'
+create_order_url = 'https://api-ru.iiko.services/api/1/order/create'
 #calculate_checkin_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/calculate'
 order_response = requests.post(url=create_order_url, headers=headers, data=json.dumps(data)).json()
 #calculate_checkin_response = requests.post(url=calculate_checkin_url, headers=headers, data=json.dumps(data)).json()

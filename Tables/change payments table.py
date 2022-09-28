@@ -48,19 +48,16 @@ data = {
 TERMINGAL_GROUPS_IDS_RAW = requests.post(url=terminals_url, headers=headers, data=json.dumps(data)).json()['terminalGroups']
 print(TERMINGAL_GROUPS_IDS_RAW)
 
-change_payments_url = 'https://api-eu.iiko.services/api/1/deliveries/change_payments'
+change_payments_url = 'https://api-eu.iiko.services/api/1/order/change_payments'
 org_id = ORGANIZATION_IDS[0]
 data = {
     "organizationId": org_id,
-    "orderId": "b026ed46-85c5-467f-abf4-46db17c1fd3e",
+    "orderId": "53836009-c235-4067-a48c-61f4295a4a36",
     "payments": [
         # {
-            # "paymentTypeKind": "Cash",
-            # "sum": 11,
-            # "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
-            # "isProcessedExternally": true,
-            # "paymentAdditionalData": {},
-            # "isFiscalizedExternally": true
+        #     "paymentTypeKind": "Cash",
+        #     "sum": 11,
+        #     "paymentTypeId": "09322f46-578a-d210-add7-eec222a08871",
         # }
     ],
     "tips": [

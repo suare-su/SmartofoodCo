@@ -8,6 +8,9 @@ authorization_url = 'https://api-ru.iiko.services/api/1/access_token'
 data = {
     "apiLogin": "7ff5cfa5"
 }
+data = {
+    "apiLogin": "ff652be7"
+}
 token = requests.post(url=authorization_url, headers=headers, data=json.dumps(data)).json()['token']
 print("TOKEN: ",token)
 
@@ -19,11 +22,11 @@ print("ORGANIZATIONS: ", ORGANIZATION_IDS)
 folder = 'GetNewMenu'
 label = ''
 get_customer_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/get_customer'
-get_customer_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/customer/info'
+#get_customer_url = 'https://api-ru.iiko.services/api/1/loyalty/iiko/customer/info'
 data = {
-    'organizationId': '2be1360a-93d0-4b17-82d4-5193a487bc3f',
+    'organizationId': ORGANIZATION_IDS[0],
     'type': 'phone',
-    'phone': '+79957723828',
+    'phone': '+79999999999',
 }
 customer = requests.post(url=get_customer_url, headers=headers, data=json.dumps(data)).json()
-print(customer)
+print(json.dumps(customer))
